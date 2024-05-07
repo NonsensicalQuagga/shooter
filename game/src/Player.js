@@ -1,7 +1,7 @@
 import Gun from "./Gun";
 import spriteImage from "./assets/sprites/Idle Run (78x58).png";
 export default class player extends Gun {
-  constructor(game) {
+  constructor(game, moveUp, moveDown, moveLeft, moveRight, shootKey, changeGun, changeSpecial)  {
     super(game);
     this.game = game;
     this.width = 78;
@@ -29,18 +29,30 @@ export default class player extends Gun {
     this.flip = false;
 
 
+    this.moveUp = moveUp
+    this.moveDown = moveDown
+    this.moveLeft = moveLeft
+    this.moveRight = moveRight
+    this.shootKey = shootKey
+    this.changeGun = changeGun
+    this.changeSpecial = changeSpecial
+
   }
 
+  
+
+
+
   update(deltaTime) {
-    if (this.game.keys.includes('a') &&
+    if (this.game.keys.includes(this.moveLeft) &&
       !(this.x <= 0)) this.speedX = -this.maxSpeed;
-    else if (this.game.keys.includes('d') &&
+    else if (this.game.keys.includes(this.moveRight) &&
       !(this.x + this.width >= this.game.width)) this.speedX = this.maxSpeed;
     else this.speedX = 0;
 
-    if (this.game.keys.includes('w') &&
+    if (this.game.keys.includes(this.moveUp) &&
       !(this.y <= 0)) this.speedY = -this.maxSpeed;
-    else if (this.game.keys.includes('s') &&
+    else if (this.game.keys.includes(this.moveDown) &&
       !(this.y + this.height >= this.game.height)) this.speedY = this.maxSpeed;
     else this.speedY = 0;
 
@@ -56,7 +68,7 @@ export default class player extends Gun {
       this.maxFrame = 11;
     }
 
-    if (this.game.keys.includes(' ')) this.shoot();
+    if (this.game.keys.includes(this.shootKey)) this.shoot();
 
     this.projectiles.forEach(projectile => {
       projectile.update();
@@ -75,6 +87,23 @@ export default class player extends Gun {
     if (this.frameX >= this.maxFrame) {
       this.frameX = 0;
     }
+   /* console.log(this.changeGun)
+    if (this.game.keys.includes(this.changeGun)) {
+      if (this.gun === 1) {
+          this.gun = 2;
+          this.shotgunStats();
+      }
+      else if (this.gun === 2) {
+          this.gun = 4;
+          this.assaultRifleStats();
+      }
+      else {
+          this.gun = 1;
+          this.pistolStats();
+      }
+      console.log("swap gun")
+  }*/
+
   }
 
   draw(context) {
@@ -105,6 +134,9 @@ export default class player extends Gun {
       this.height * 2
     )
   }
+
+
+  
 
 
 

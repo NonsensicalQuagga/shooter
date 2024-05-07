@@ -39,10 +39,13 @@
                 let screenZeroY = (window.innerHeight - 480)/2
                 if(mousePossitionX -screenZeroX >= 130 && mousePossitionX -screenZeroX <= 310 && mousePossitionY -screenZeroY >= 200 && mousePossitionY - screenZeroY <= 270){
                     game.gameType = 1
-                    }
-                   console.log(mousePossitionX -screenZeroX)    
+                }
+                
+                
    })
         
-        
+  /* if (game.keys.includes('a')){
+    game.gameType = 2
+   }*/
     }   
  

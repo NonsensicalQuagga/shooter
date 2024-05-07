@@ -30,7 +30,8 @@ export default class Game {
     this.enemyInterval = 800;
     this.powerUps = [];
 
-    this.player = new player(this);
+    this.player = new player(this, 'w', 's', 'a', 'd', ' ', 'q', 'e');
+    this.playerTwo = new player(this, 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'j', 'k', 'l')
     this.life = 3;
     this.damageModifier = 1;
 
@@ -79,6 +80,7 @@ export default class Game {
           this.actuallyOver = true;
         } 
       }
+    
 
       this.player.projectiles.forEach((projectile) => {
         if (this.checkCollision(projectile, enemy)) {
@@ -103,7 +105,58 @@ export default class Game {
         }
       });
     });
-    
+     //player two
+      if(this.gameType === 2){
+
+        this.playerTwo.update(deltaTime)
+
+        this.enemies.forEach((enemy) => {
+          if (this.checkCollision(this.playerTwo, enemy)) {
+            if (enemy.lives - 20 * this.damageModifier <= 0)
+              enemy.markedForDeletion = true;
+            else enemy.lives -= 20 * this.damageModifier;
+            this.life -= enemy.collisionDamage * this.damageModifier;
+            this.score += enemy.scorePoints;
+            if (this.life <= 0){
+              this.gameOver = true;
+              this.actuallyOver = true;
+            } 
+          }
+
+      this.playerTwo.projectiles.forEach((projectile) => {
+        if (this.checkCollision(projectile, enemy)) {
+          projectile.markedForDeletion = true;
+          enemy.lives -= projectile.damage * this.damageModifier;
+          if (enemy.lives <= 0) {
+            if (Math.random() > 0.95) {
+              let newPowerUp;
+              let random = Math.random() * 9;
+              if (random >= 0 && random < 5)
+                newPowerUp = new HealthPotion(this);
+              else if (random >= 5 && random < 8)
+                newPowerUp = new DamageBoost(this);
+              else if (random >= 8 && random <= 9)
+                newPowerUp = new BeamTime(this);
+              newPowerUp.setPosition(enemy);
+              this.powerUps.push(newPowerUp);
+            }
+            enemy.markedForDeletion = true;
+            this.score += enemy.scorePoints;
+          }
+        }
+      });
+    });
+  
+  
+  this.powerUps.forEach((powerUp) => {
+    powerUp.update(deltaTime);
+    if (this.checkCollision(this.playerTwo, powerUp)) {
+      powerUp.markedForDeletion = true;
+      this.score -= powerUp.scorePoints;
+      powerUp.effect();
+    }
+  });
+}
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     this.powerUps = this.powerUps.filter(
       (powerUp) => !powerUp.markedForDeletion
@@ -116,6 +169,10 @@ export default class Game {
 
       this.background.draw(context);
       this.player.draw(context);
+      
+      if(this.gameType === 2){
+      this.playerTwo.draw(context)
+    }
       this.enemies.forEach((enemy) => enemy.draw(context));
       this.powerUps.forEach((enemy) => enemy.draw(context));
       this.ui.draw(context);

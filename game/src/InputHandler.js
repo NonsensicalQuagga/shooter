@@ -2,13 +2,13 @@ export default class InputHandler {
     constructor(game) {
         this.game = game
         window.addEventListener('keydown', (event) => {
-            
+
             if(this.game.keys.indexOf(event.key) === -1)
                 this.game.keys.push(event.key);
 
             //if (event.key === ' ') this.game.player.shoot();
 
-            if (event.key === 'u') this.game.debug = !this.game.debug;
+            if (event.key === 'u' && this.game.gameType === 1) this.game.debug = !this.game.debug;
             
             if (event.key === 'p' && !this.game.actuallyOver) {
                 this.game.paused = !this.game.paused;
@@ -62,7 +62,7 @@ export default class InputHandler {
                 console.log("spawn beam")
             }
 
-            if (event.key === 'q') {
+            if (event.key === this.game.player.changeGun) {
                 if (this.game.player.gun === 1) {
                     this.game.player.gun = 2;
                     this.game.player.shotgunStats();
@@ -77,13 +77,40 @@ export default class InputHandler {
                 }
                 console.log("swap gun")
             }
+            
 
-            if (event.key === 'e') if (this.game.player.beamAmmoFired <= this.game.player.beamAmmunition - 10 && this.game.player.canUseBeam &&!(this.game.player.gun === 3)){
+            if (event.key === this.game.player.changeSpecial) if (this.game.player.beamAmmoFired <= this.game.player.beamAmmunition - 10 && this.game.player.canUseBeam &&!(this.game.player.gun === 3)){
                 this.game.player.gun = 3;
                 this.game.player.beamStats();
             } else{
                 this.game.player.gun = 5;
                 this.game.player.autoShotgunStats();
+            }
+            
+            if(this.game.gameType === 2){
+                if (event.key === this.game.playerTwo.changeGun) {
+                    if (this.game.playerTwo.gun === 1) {
+                        this.game.playerTwo.gun = 2;
+                        this.game.playerTwo.shotgunStats();
+                    }
+                    else if (this.game.playerTwo.gun === 2) {
+                        this.game.playerTwo.gun = 4;
+                        this.game.playerTwo.assaultRifleStats();
+                    }
+                    else {
+                        this.game.playerTwo.gun = 1;
+                        this.game.playerTwo.pistolStats();
+                    }
+                    console.log("swap gun 2")
+                }
+                if (event.key === this.game.playerTwo.changeSpecial) if (this.game.playerTwo.beamAmmoFired <= this.game.playerTwo.beamAmmunition - 10 && this.game.playerTwo.canUseBeam &&!(this.game.playerTwo.gun === 3)){
+                    this.game.playerTwo.gun = 3;
+                    this.game.playerTwo.beamStats();
+                } else{
+                    this.game.playerTwo.gun = 5;
+                    this.game.playerTwo.autoShotgunStats();
+                }
+            
             }
 
 
