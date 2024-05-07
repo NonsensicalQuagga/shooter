@@ -25,3 +25,4 @@ Dock så kunde den inte skjuta, kolidera med fiender eller ta powerups.
 När det var implimenterat så fungerade allt.
 
 User interface för spelare 2
+
