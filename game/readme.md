@@ -13,3 +13,13 @@ Det fungerar så länge canvas är så stor den kan bli eller 854px bred.
 
 # 07-05-2024
 Av att skriva in korrekta värden så fungerar knappen.
+
+Local co-op:
+Min ide när jag började detta var ändra värden för player controlls från absoluta till relativa. 
+Därefter lägga till en till player.
+
+Det fanns inga problem med att ändra player controlls och sedan lägga till en till player.
+Bara det att andra spelaren inte gjorde någonting.
+När jag la till kod för att rita den så kunde den gå och visas på skärmen.
+Dock så kunde den inte skjuta, kolidera med fiender eller ta powerups.
+När det var implimenterat så fungerade allt.
