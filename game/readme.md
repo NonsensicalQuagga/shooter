@@ -23,3 +23,5 @@ Bara det att andra spelaren inte gjorde någonting.
 När jag la till kod för att rita den så kunde den gå och visas på skärmen.
 Dock så kunde den inte skjuta, kolidera med fiender eller ta powerups.
 När det var implimenterat så fungerade allt.
+
+User interface för spelare 2
