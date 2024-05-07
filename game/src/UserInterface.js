@@ -67,6 +67,46 @@ export default class UserInterface{
         20,
         460
     );
+
+    // 2 player
+    if(this.game.gameType === 2){
+      //context.font = `${this.fontSize}px ${this.fontFamily}`
+    if(this.game.playerTwo.gun === 1) 
+    context.fillText(  
+      `Bullets: ${(this.game.playerTwo.ammunition - this.game.playerTwo.pistolAmmoFired)} / ${(this.game.playerTwo.ammunition)}`,
+      670,
+      30
+  );
+      else if(this.game.playerTwo.gun === 2){
+        context.fillText(  
+          `Shells: ${(this.game.playerTwo.ammunition - this.game.playerTwo.shotgunAmmoFired)} / ${(this.game.playerTwo.ammunition)}`,
+          670,
+          30
+        );
+      }
+      else if(this.game.playerTwo.gun === 3){
+        context.fillText(  
+          `Energy: ${(this.game.playerTwo.beamAmmunition - this.game.playerTwo.beamAmmoFired)} / ${(this.game.playerTwo.beamAmmunition)}`,
+          670,
+          30
+        );
+      }
+      else if(this.game.playerTwo.gun === 4){
+        context.fillText(  
+          `Bullets: ${(this.game.playerTwo.ammunition - this.game.playerTwo.assaultRifleAmmoFired)} / ${(this.game.playerTwo.ammunition)}`,
+          670,
+          30
+        );
+      }
+      else if(this.game.playerTwo.gun === 5){
+        context.fillText(  
+          `Shells: ${(this.game.playerTwo.autoShotgunAmmo - this.game.playerTwo.autoShotgunAmmoFired)} / ${(this.game.playerTwo.autoShotgunAmmo)}`,
+          670,
+          30
+        );
+      }}
+      //end of 2 player block
+
     if(this.game.paused){
       context.textAlign = 'center'
       context.font = `50px ${this.fontFamily}`
@@ -83,7 +123,7 @@ export default class UserInterface{
       );
       context.font = `20px ${this.fontFamily}`
       context.fillText(
-          'Move with arrow keys.',
+          'Move with wasd.',
           this.game.width/2,
           this.game.height/2 
       );
@@ -98,7 +138,18 @@ export default class UserInterface{
           'Swap gun with q or e.',
           this.game.width/2,
           this.game.height/2 + 60 
-      );}
+          );
+        
+          // 2 player
+          if(this.game.gameType === 2){
+            context.font = `20px ${this.fontFamily}`
+            context.fillText(
+              'Player 2 uses arrow keys and j, k, l',
+              this.game.width/2,
+              this.game.height/2 + 90 
+              );}
+        }
+        
 
         if(this.game.actuallyOver){
             context.textAlign = 'center'
